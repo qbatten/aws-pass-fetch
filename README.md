@@ -19,7 +19,8 @@ credential_process = /path/to/aws-pass-fetch.sh [aws_access_key] [call to passwo
 ```
 
 5. Note that if any of these args has spaces in it, you must put double quotes around that one (e.g. if my script is in "Super Fun Scripts," that has to be quoted... `"~/Super Fun Scripts/aws-pass-fetch.sh"`)
-6. You should be good to go! You may want to test it out by copying the above line, minus `credential_process = `, and running it in your terminal. It should return your password (and only your password) to STDOUT.
+6. You may want to test it out by copying the above line, minus `credential_process = `, and running it in your terminal. It should return your password (and only your password) to STDOUT.
+7. You should be good to go! Your credentials will automatically be pulled from your password manager whenever needed, no matter what profile you're using!
 
 ## Examples
 
