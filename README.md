@@ -41,10 +41,9 @@ credential_process = /User/Person1/.scripts/aws-pass-fetch.sh AKIAYTXKXFACYMQOJN
 
 * I'm using Apple's Keychain Access to store my secret keys.
 * I'm using two profiles: 
-    * [work], for which my access  key is "AKIAYTXPOIVCYMQOJNCF".
-    * [default], for which my access  key is "AKFAYTVOLRHOCYMPVENW". 
-, under "aws-personal" / "aws_secret_access_key". 
-* When I added these secret keys to my keychain, I ran: `security add-generic-password  -a [my_account_username] -s [aws-default or aws-work] -l aws_secret_access_key  -w [my_secret_key]`. 
+    * [work], for which my access  key is "AKIAYTXPOIVCYMQOJNCF", and the key is stored under "aws-work-secret_access_key"
+    * [default], for which my access  key is "AKFAYTVOLRHOCYMPVENW", and the key is stored under "aws-default-secret_access_key"
+* When I added these secret keys to my keychain, I ran: `security add-generic-password  -a [my_username] -s [aws-work-secret_access_key or aws-default-secret_access_key] -w [my_secret_key]`. 
 * My work credentials are temporary, so  I normally do put my current session_token in my credentials file. I'll include that here, it's "AQoEXAMPLEH4aoAH0gNC" (NOTE: real  session_tokens are way longer than this example one). 
 * My work creds last for 48 hours, so I'm not worried about auto-refreshing before they expire; I won't include an expiration timestamp for them.
 * My aws-pass-fetch.sh file is in my PATH. 
@@ -53,17 +52,18 @@ My ~/.aws/config file looks like this:
 
 ``` 
 [default]
-credential_process = aws-pass-fetch.sh AKFAYTVOLRHOCYMPVENW "security find-generic-password -a aws-personal -s aws-default -l aws_secret_access_key" 
+credential_process = aws-pass-fetch.sh AKFAYTVOLRHOCYMPVENW "security find-generic-password -a [my_username] -s aws-default-secret_access_key -w" 
 
 [work]
-credential_process = aws-pass-fetch.sh AKIAYTXPOIVCYMQOJNCF "security find-generic-password -a aws-personal -s aws-work -l aws_secret_access_key" AQoEXAMPLEH4aoAH0gNC
+credential_process = aws-pass-fetch.sh AKIAYTXPOIVCYMQOJNCF "security find-generic-password -a [my_username] -s aws-work-secret_access_key -w" AQoEXAMPLEH4aoAH0gNC
 ```
 
 
 ## Other Thoughts and Useful Links
 
 * I like using Keychain Access and giving my user ownership of the key. That way, I never have to enter my password when AWS calls this script. Of course, if you need these keys to be secret from other people who can access your computer, or if they're super-important, you might want to not do that. Pass will prompt you quite frequently to re-unlock your pass database (unless you set it to stay open for longer).
-* More on using Keychain Access from the CLI [link](https://www.netmeister.org/blog/keychain-passwords.html).
+    * If you use Keychain Access, your command should be `security find-generic-password -a [your_username] -s [service_name_for_this_key] -w`. That `-w` at the end is important because it tells Keychain Access to output only the password itself.
+    * More on using Keychain Access from the CLI [link](https://www.netmeister.org/blog/keychain-passwords.html).
 * [This AWS doc](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-global) has more info about these credential file variables. Scroll down to "Global settings" and there's info about aws_access_key_id,  aws_secret_access_key, and aws_session_token. 
 * [This AWS doc](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sourcing-external.html) has more on sourcing credentials with an external process.
 
