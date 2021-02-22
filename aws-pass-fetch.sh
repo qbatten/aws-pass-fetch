@@ -1,24 +1,24 @@
 #!/bin/sh
 #
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
-#
-#
+# Copyright 2021 Quinn Batten
 # 
-# AWS-cli using an external process https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sourcing-external.html
-# JSON from Bash https://stackoverflow.com/questions/12524437/output-json-from-bash-script/12524510
-
+# Permission is hereby granted, free of charge, to any person obtaining a copy of 
+# this software and associated documentation files (the "Software"), to deal in 
+# the Software without restriction, including without limitation the rights to 
+# use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies 
+# of the Software, and to permit persons to whom the Software is furnished to do 
+# so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all 
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+# FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR 
+# COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER 
+# IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
+# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 programname=$0
@@ -53,22 +53,6 @@ Arguments:
     [expiration]: (optional) An ISO8601 timestamp of when these 
         credentials expire. It's relevant if you
         have temporary credentials.
-
-Installation:
-    1. Copy this somewhere on your drive and give it execution
-       permission (e.g. chmod 700 ~/my_scripts/aws-pass-fetch.sh)
-    2. Make sure you have a way to easily fetch your creds via the
-       commandline. I use pass (https://www.passwordstore.org), but you
-       can use any credential manager that lets you enter one command
-       and get back your password as a string (see examples for more).
-    3. Put a line in your ~/.aws/config or ~/.aws/credentials 
-       file, under the relevant profile, as follows:
-       """
-       [my_profile]
-       credential_process = /path/to/aws-pass-fetch.sh MYACCESSKEY 
-            "PASSWDPROGRAM ARGTOFETCHSECRETKEY" (optional sesssion_token) 
-            (optional expiration_time)
-       """
 
 Examples:
     [PERSON 1] 
@@ -105,16 +89,6 @@ Examples:
             aws_secret_access_key" "AQoEXAMPLEH4aoAH0gNC"
 
         """
-
-Context:
-    (links work as of Feb 2021)
-    - You can go to this AWS doc for more info about
-      these credential file variables. Scroll down to "Global settings"
-      and there's info about aws_access_key_id,  aws_secret_access_key,
-      and aws_session_token. Link: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-global
-    - You can go here for more on sourcing credentials with an external
-      process. Link: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sourcing-external.html
-
 
 _EOF
 }
